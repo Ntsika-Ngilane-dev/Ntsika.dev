@@ -67,9 +67,9 @@ This site is designed for **quick lead generation and long-term branding**. You 
 ---
 
 ## 📧 Contact
-- **Email:** hello@ntsika.dev  
-- **Phone:** +27 (0) 82 XXX XXXX  
-- **Location:** Johannesburg, South Africa  
+- **Email:** hello@workngilane@gmail.com  
+- **Phone:** +27 (0) 62 928 0010
+- **Location:** Pretoria East, South Africa  
 
 ---
 
@@ -77,5 +77,3 @@ This site is designed for **quick lead generation and long-term branding**. You 
 This project is licensed under the **MIT License** – feel free to use and modify.  
 
 ---
-
-💡 Pro Tip: Upsell services like **SEO, hosting, and ongoing maintenance** to turn one-time projects into **recurring revenue streams**.
