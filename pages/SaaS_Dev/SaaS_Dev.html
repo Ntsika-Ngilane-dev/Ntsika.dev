@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SaaS Development - Configure Your Solution</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            box-shadow: 0 32px 64px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #667eea 100%);
+            color: white;
+            padding: 50px 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(from 0deg, rgba(255, 255, 255, 0.1), transparent, rgba(255, 255, 255, 0.1));
+            animation: rotate 8s linear infinite;
+        }
+        
+        @keyframes rotate {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+        
+        .header h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 15px;
+            position: relative;
+            z-index: 1;
+            background: linear-gradient(45deg, #fff, #e2e8f0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .header p {
+            font-size: 1.3rem;
+            opacity: 0.95;
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .base-price {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 25px 40px;
+            text-align: center;
+            font-size: 1.4rem;
+            font-weight: 700;
+        }
+        
+        .solution-type-selector {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            padding: 30px 40px;
+        }
+        
+        .solution-types {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .solution-type {
+            background: rgba(255, 255, 255, 0.15);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 16px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            text-align: center;
+        }
+        
+        .solution-type:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+        }
+        
+        .solution-type.selected {
+            background: rgba(255, 255, 255, 0.9);
+            color: #4facfe;
+            border-color: white;
+            box-shadow: 0 8px 32px rgba(255, 255, 255, 0.3);
+        }
+        
+        .solution-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+        
+        .solution-description {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+        
+        .content {
+            padding: 40px 40px;
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 50px;
+        }
+        
+        .options-section h2 {
+            font-size: 2.2rem;
+            color: #2d3748;
+            margin-bottom: 35px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .option-category {
+            margin-bottom: 40px;
+        }
+        
+        .category-title {
+            font-size: 1.5rem;
+            color: #4a5568;
+            margin-bottom: 25px;
+            font-weight: 700;
+            border-bottom: 3px solid #e2e8f0;
+            padding-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .option-item {
+            background: white;
+            border: 2px solid #e2e8f0;
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 20px;
+            transition: all 0.4s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .option-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(102, 126, 234, 0.08), transparent);
+            transition: left 0.6s ease;
+        }
+        
+        .option-item:hover {
+            border-color: #667eea;
+            transform: translateY(-3px);
+            box-shadow: 0 12px 36px rgba(102, 126, 234, 0.15);
+        }
+        
+        .option-item:hover::before {
+            left: 100%;
+        }
+        
+        .option-item.selected {
+            border-color: #667eea;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.06), rgba(118, 75, 162, 0.06));
+            box-shadow: 0 8px 24px rgba(102, 126, 234, 0.2);
+        }
+        
+        .option-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+        
+        .option-title {
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: #2d3748;
+            flex: 1;
+        }
+        
+        .option-price {
+            font-weight: 800;
+            color: #667eea;
+            font-size: 1.2rem;
+            margin-left: 20px;
+        }
+        
+        .option-description {
+            color: #718096;
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-top: 10px;
+        }
+        
+        .checkbox {
+            width: 28px;
+            height: 28px;
+            border: 3px solid #cbd5e0;
+            border-radius: 8px;
+            margin-right: 20px;
+            position: relative;
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+        }
+        
+        .option-item.selected .checkbox {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-color: #667eea;
+        }
+        
+        .option-item.selected .checkbox::after {
+            content: '✓';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-weight: bold;
+            font-size: 16px;
+        }
+        
+        .summary-panel {
+            background: white;
+            border-radius: 24px;
+            padding: 35px;
+            height: fit-content;
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 20px;
+            border: 1px solid #e2e8f0;
+        }
+        
+        .summary-title {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: #2d3748;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .cost-breakdown {
+            margin-bottom: 30px;
+        }
+        
+        .cost-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px 0;
+            border-bottom: 1px solid #f7fafc;
+            align-items: center;
+        }
+        
+        .cost-item:last-child {
+            border-bottom: none;
+        }
+        
+        .cost-label {
+            color: #4a5568;
+            flex: 1;
+            font-weight: 500;
+        }
+        
+        .cost-value {
+            font-weight: 700;
+            color: #2d3748;
+            font-size: 1.1rem;
+        }
+        
+        .total-section {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 25px;
+            border-radius: 16px;
+            margin: 25px 0;
+            text-align: center;
+            box-shadow: 0 8px 24px rgba(102, 126, 234, 0.3);
+        }
+        
+        .total-label {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+        
+        .total-amount {
+            font-size: 2.5rem;
+            font-weight: 900;
+        }
+        
+        .order-button {
+            width: 100%;
+            background: linear-gradient(135deg, #48bb78, #38a169);
+            color: white;
+            border: none;
+            padding: 20px;
+            border-radius: 16px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 16px rgba(72, 187, 120, 0.3);
+        }
+        
+        .order-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 32px rgba(72, 187, 120, 0.4);
+        }
+        
+        .enterprise-badge {
+            background: linear-gradient(135deg, #f093fb, #f5576c);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            margin-left: 12px;
+            text-transform: uppercase;
+        }
+        
+        .popular-badge {
+            background: linear-gradient(135deg, #4facfe, #00f2fe);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            margin-left: 12px;
+            text-transform: uppercase;
+        }
+        
+        @media (max-width: 1024px) {
+            .content {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+            .header h1 {
+                font-size: 2.2rem;
+            }
+            .solution-types {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                margin: 10px;
+                border-radius: 16px;
+            }
+            .header {
+                padding: 30px 20px;
+            }
+            .content {
+                padding: 30px 20px;
+            }
+        }
+        
+        .icon {
+            font-size: 1.8rem;
+        }
+        
+        .timeline-info {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 15px;
+            border-radius: 12px;
+            margin: 15px 0;
+            font-size: 0.9rem;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🏢 SaaS Development</h1>
+            <p>Custom software solutions including CRM systems, booking platforms, and business automation tools</p>
+        </div>
+
+        <div class="base-price">
+            Enterprise Solution: R25,000 • Scalable cloud-based software
+        </div>
+
+        <div class="solution-type-selector">
+            <div style="font-size: 1.3rem; font-weight: 700; margin-bottom: 10px; text-align: center;">Choose Your Solution Type</div>
+            <div class="solution-types">
+                <div class="solution-type selected" data-type="crm" data-name="CRM System">
+                    <div class="solution-title">📊 CRM System</div>
+                    <div class="solution-description">Customer relationship management with lead tracking and sales pipeline</div>
+                </div>
+                <div class="solution-type" data-type="booking" data-name="Booking Platform">
+                    <div class="solution-title">📅 Booking Platform</div>
+                    <div class="solution-description">Appointment scheduling with calendar integration and payments</div>
+                </div>
+                <div class="solution-type" data-type="automation" data-name="Business Automation">
+                    <div class="solution-title">⚙️ Business Automation</div>
+                    <div class="solution-description">Workflow automation and process management tools</div>
+                </div>
+                <div class="solution-type" data-type="custom" data-name="Custom Solution">
+                    <div class="solution-title">🎯 Custom Solution</div>
+                    <div class="solution-description">Tailored software built specifically for your business needs</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content">
+            <div class="options-section">
+                <h2><span class="icon">🚀</span>Configure Your SaaS Solution</h2>
+
+                <div class="option-category">
+                    <div class="category-title">👥 User Management & Authentication</div>
+
+                    <div class="option-item" data-price="8000" data-name="Multi-Role User System">
+                        <div style="display: flex; align-items: flex-start;">
+                            <div class="checkbox"></div>
+                            <div style="flex: 1;">
+                                <div class="option-header">
+                                    <div class="option-title">Multi-Role User System <span class="popular-badge">Essential</span></div>
+                                    <div class="option-price">+R8,000</div>
+                                </div>
+                                <div class="option-description">Role-based permissions, user management dashboard, team collaboration features</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="option-item" data-price="6000" data-name="SSO Integration">
+                        <div style="display: flex; align-items: flex-start;">
+                            <div class="checkbox"></div>
+                            <div style="flex: 1;">
+                                <div class="option-header">
+                                    <div class="option-title">Single Sign-On (SSO) Integration</div>
+                                    <div class="option-price">+R6,000</div>
+                                </div>
+                                <div class="option-description">Google Workspace, Microsoft 365, SAML integration for enterprise authentication</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="option-item" data-price="4500" data-name="Multi-Factor Authentication">
+                        <div style="display: flex; align-items: flex-start;">
+                            <div class="checkbox"></div>
+                            <div style="flex: 1;">
+                                <div class="option-header">
+                                    <div class="option-title">Multi-Factor Authentication</div>
+                                    <div class="option-price">+R4,500</div>
+                                </div>
+                                <div class="option-description">SMS, email, and authenticator app 2FA for enhanced security</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="option-category">
+                    <div class="category-title">💾 Database & API Integration</div>
+
+                    <div class="option-item" data-price="12000" data-name="Advanced Database Design">
+                        <div style="display: flex; align-items: flex-start;">
+                            <div class="checkbox"></div>
+                            <div style="flex: 1;">
+                                <div class="option-header">
+                                    <div class="option-title">Advanced Database Design <span class="popular-badge">Recommended</span></div>
+                                    <div class="option-price">+R12,000</div>
+                                </div>
+                                <div class="option-description">Optimized database schema, indexing, backup systems, and data migration tools</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="option-item" data-price="10000" data-name="Third-Party API Integration">
+                        <div style="display: flex; align-items: flex-start;">
+                            <div class="checkbox"></div>
+                            <div style="flex: 1;">
+                                <div class="option-header">
+                                    <div class="option-title">Third-Party API Integration</div>
+                                    <div class="option-price">+R10,000</div>
+                                </div>
+                                <div class="option-description">Payment gateways, email services, CRM tools, and custom API connections</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="option-item" data-price="8000" data-name="RESTful API Development">
+                        <div style="display: flex; align-items: flex-start;">
+                            <div class="checkbox"></div>
+                            <div style="flex: 1;">
+                                <div class="option-header">
+                                    <div class="option-title">RESTful API Development</div>
+                                    <div class="option-price">+R8,000</div>
+                                </div>
+                                <div class="option-description">Custom API endpoints, documentation, rate limiting, and developer tools</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="option-category">
+                    <div class="category-title">📊 Analytics & Reporting</div>
+
+                    <div class="option-item" data-price="9000" data-name="Advanced Analytics Dashboard">
+                        <div style="display: flex; align-items: flex-start;">
+                            <div class="checkbox"></div>
+                            <div style="flex: 1;">
+                                <div class="option-header">
+                                    <div class="option-title">Advanced Analytics Dashboard</div>
+                                    <div class="option-price">+R9,000</div>
+                                </div>
+                                <div class="option-description">Real-time metrics, custom KPIs, data visualization, and performance tracking</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="option-item" data-price="7000" data-name="Custom Report Builder">
+                        <div style="display: flex; align-items: flex-start;">
+                            <div class="checkbox"></div>
+                            <div style="flex: 1;">
+                                <div class="option-header">
+                                    <div class="option-title">Custom Report Builder</div>
+                                    <div class="option-price">+R7,000</div>
+                                </div>
+                                <div class="option-description">Drag-and-drop report creation, scheduled exports, PDF/Excel generation</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="option-item" data-price="5500" data-name="Business Intelligence Integration">
+                        <div style="display: flex; align-items: flex-start;">
+                            <div class="checkbox"></div>
+                            <div style="flex: 1;">
+                                <div class="option-header">
+                                    <div class="option-title">Business Intelligence Integration</div>
+                                    <div class="option-price">+R5,500</div>
+                                </div>
+                                <div class="option-description">Power BI, Tableau, or Google Data Studio integration for advanced analytics</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="option-category">
+                    <div class="category-title">🔄 Automation & Workflows</div>
+
+                    <div class="option-item" data-price="15000" data-name="Workflow Automation Engine">
+                        <div style="display: flex; align-items: flex-start;">
+                            <div class="checkbox"></div>
+                            <div style="flex: 1;">
+                                <div class="option-header">
+                                    <div class="option-title">Workflow Automation Engine <span class="enterprise-badge">Enterprise</span></div>
+                                    <div class="option-price">+R15,000</div>
+                                </div>
+                                <div class="option-description">Visual workflow builder, triggers, actions, approval processes, and task automation</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="option-item" data-price="8000" data-name="Email Automation System">
+                        <div style="display: flex; align-items: flex-start;">
+                            <div class="checkbox"></div>
+                            <div style="flex: 1;">
+                                <div class="option-header">
+                                    <div class="option-title">Email Automation System</div>
+                                    <div class="option-price">+R8,000</div>
+                                </div>
+                                <div class="option-description">Automated campaigns, drip sequences, templates, and delivery tracking</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="option-item" data-price="12000" data-name="Document Management System">
+                        <div style="display: flex; align-items: flex-start;">
+                            <div class="checkbox"></div>
+                            <div style="flex: 1;">
+                                <div class="option-header">
+                                    <div class="option-title">Document Management System</div>
+                                    <div class="option-price">+R12,000</div>
+                                </div>
+                                <div class="option-description">File storage, version control, digital signatures, and collaboration tools</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="option-category">
+                    <div class="category-title">💳 Payment & Billing</div>
+
+                    <div class="option-item" data-price="10000" data-name="Subscription Billing System">
+                        <div style="display: flex; align-items: flex-start;">
+                            <div class="checkbox"></div>
+                            <div style="flex: 1;">
+                                <div class="option-header">
+                                    <div class="option-title">Subscription Billing System</div>
+                                    <div class="option-price">+R10,000</div>
+                                </div>
+                                <div class="option-description">Recurring payments, plan management, invoicing, and payment recovery</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="option-item" data-price="6000" data-name="Multi-Currency Support">
+                        <div style="display: flex; align-items: flex-start;">
+                            <div class="checkbox"></div>
+                            <div style="flex: 1;">
+                                <div class="option-header">
+                                    <div class="option-title">Multi-Currency Support</div>
+                                    <div class="option-price">+R6,000</div>
+                                </div>
+                                <div class="option-description">Currency conversion, localized pricing, and international payment methods</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="option-category">
+                    <div class="category-title">🔐 Security & Compliance</div>
+
+                    <div class="option-item" data-price="12000" data-name="Enterprise Security Suite">
+                        <div style="display: flex; align-items: flex-start;">
+                            <div class="checkbox"></div>
+                            <div style="flex: 1;">
+                                <div class="option-header">
+                                    <div class="option-title">Enterprise Security Suite <span class="enterprise-badge">Enterprise</span></div>
+                                    <div class="option-price">+R12,000</div>
+                                </div>
+                                <div class="option-description">Data encryption, audit logs, security monitoring, and penetration testing</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="option-item" data-price="15000" data-name="GDPR/POPIA Compliance">
+                        <div style="display: flex; align-items: flex-start;">
+                            <div class="checkbox"></div>
+                            <div style="flex: 1;">
+                                <div class="option-header">
+                                    <div class="option-title">GDPR/POPIA Compliance</div>
+                                    <div class="option-price">+R15,000</div>
+                                </div>
+                                <div class="option-description">Data protection controls, consent management, and compliance reporting</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="summary-panel">
+                <div class="summary-title">💼 Solution Summary</div>
+
+                <div class="cost-breakdown">
+                    <div class="cost-item">
+                        <div class="cost-label">Solution: <span id="selected-solution">CRM System</span></div>
+                        <div class="cost-value">R25,000</div>
+                    </div>
+                    <div id="selected-items"></div>
+                    <div class="cost-item">
+                        <div class="cost-label">Subtotal</div>
+                        <div class="cost-value" id="subtotal">R25,000</div>
+                    </div>
+                    <div class="cost-item">
+                        <div class="cost-label">Development & PM (25%)</div>
+                        <div class="cost-value" id="labor-cost">R6,250</div>
+                    </div>
+                </div>
+
+                <div class="total-section">
+                    <div class="total-label">Total Investment</div>
+                    <div class="total-amount" id="total-amount">R31,250</div>
+                </div>
+
+                <div class="timeline-info">
+                    ⏱️ Estimated Timeline: 8-16 weeks
+                </div>
+
+                <button class="order-button" onclick="addToOrder()">
+                    🚀 Start Development
+                </button>
+
+                <div style="text-align: center; margin-top: 25px; color: #718096; font-size: 0.95rem; line-height: 1.5;">
+                    ✨ 90-day warranty<br> ☁️ Cloud hosting included<br> 🔧 6 months maintenance<br> 📚 Full documentation & training
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const basePrice = 25000;
+        let selectedOptions = [];
+        let selectedSolution = 'CRM System';
+
+        // Solution type selection
+        document.querySelectorAll('.solution-type').forEach(type => {
+            type.addEventListener('click', function() {
+                document.querySelectorAll('.solution-type').forEach(t => t.classList.remove('selected'));
+                this.classList.add('selected');
+
+                selectedSolution = this.getAttribute('data-name');
+                document.getElementById('selected-solution').textContent = selectedSolution;
+                updateSummary();
+            });
+        });
+
+        // Add click handlers to all option items
+        document.querySelectorAll('.option-item').forEach(item => {
+            item.addEventListener('click', function() {
+                this.classList.toggle('selected');
+                updateSummary();
+            });
+        });
+
+        function updateSummary() {
+            selectedOptions = [];
+            const selectedItems = document.getElementById('selected-items');
+            selectedItems.innerHTML = '';
+
+            let addonsTotal = 0;
+
+            document.querySelectorAll('.option-item.selected').forEach(item => {
+                const price = parseInt(item.getAttribute('data-price'));
+                const name = item.getAttribute('data-name');
+
+                selectedOptions.push({
+                    name,
+                    price
+                });
+                addonsTotal += price;
+
+                // Add to selected items display
+                const itemDiv = document.createElement('div');
+                itemDiv.className = 'cost-item';
+                itemDiv.innerHTML = `
+                    <div class="cost-label">${name}</div>
+                    <div class="cost-value">+R${price.toLocaleString()}</div>
+                `;
+                selectedItems.appendChild(itemDiv);
+            });
+
+            const subtotal = basePrice + addonsTotal;
+            const laborCost = Math.round(subtotal * 0.25);
+            const total = subtotal + laborCost;
+
+            document.getElementById('subtotal').textContent = `R${subtotal.toLocaleString()}`;
+            document.getElementById('labor-cost').textContent = `R${laborCost.toLocaleString()}`;
+            document.getElementById('total-amount').textContent =
