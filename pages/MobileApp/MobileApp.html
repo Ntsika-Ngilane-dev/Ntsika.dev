@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mobile App Development - Configure Your Package</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            box-shadow: 0 32px 64px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px 30px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+            animation: shimmer 4s ease-in-out infinite;
+        }
+        
+        @keyframes shimmer {
+            0%,
+            100% {
+                transform: rotate(0deg) scale(1);
+            }
+            50% {
+                transform: rotate(180deg) scale(1.1);
+            }
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .base-price {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            color: white;
+            padding: 20px 30px;
+            text-align: center;
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+        
+        .platform-selector {
+            background: linear-gradient(135deg, #4facfe, #00f2fe);
+            color: white;
+            padding: 25px 30px;
+            text-align: center;
+        }
+        
+        .platform-options {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 15px;
+        }
+        
+        .platform-option {
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 12px;
+            padding: 15px 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+        
+        .platform-option:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+        
+        .platform-option.selected {
+            background: rgba(255, 255, 255, 0.9);
+            color: #4facfe;
+            border-color: white;
+        }
+        
+        .content {
+            padding: 40px 30px;
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 40px;
+        }
+        
+        .options-section h2 {
+            font-size: 2rem;
+            color: #2d3748;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .option-category {
+            margin-bottom: 35px;
+        }
+        
+        .category-title {
+            font-size: 1.4rem;
+            color: #4a5568;
+            margin-bottom: 20px;
+            font-weight: 600;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 8px;
+        }
+        
+        .option-item {
+            background: white;
+            border: 2px solid #e2e8f0;
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 15px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .option-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(102, 126, 234, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+        
+        .option-item:hover {
+            border-color: #667eea;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(102, 126, 234, 0.15);
+        }
+        
+        .option-item:hover::before {
+            left: 100%;
+        }
+        
+        .option-item.selected {
+            border-color: #667eea;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.05), rgba(118, 75, 162, 0.05));
+            box-shadow: 0 4px 16px rgba(102, 126, 234, 0.2);
+        }
+        
+        .option-header {
+            display: flex;
+            justify-content: between;
+            align-items: flex-start;
+            margin-bottom: 10px;
+        }
+        
+        .option-title {
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: #2d3748;
+            flex: 1;
+        }
+        
+        .option-price {
+            font-weight: 700;
+            color: #667eea;
+            font-size: 1.1rem;
+            margin-left: 15px;
+        }
+        
+        .option-description {
+            color: #718096;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            margin-top: 8px;
+        }
+        
+        .checkbox {
+            width: 24px;
+            height: 24px;
+            border: 2px solid #cbd5e0;
+            border-radius: 6px;
+            margin-right: 15px;
+            position: relative;
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+        }
+        
+        .option-item.selected .checkbox {
+            background: #667eea;
+            border-color: #667eea;
+        }
+        
+        .option-item.selected .checkbox::after {
+            content: '✓';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-weight: bold;
+            font-size: 14px;
+        }
+        
+        .summary-panel {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            height: fit-content;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+            position: sticky;
+            top: 20px;
+        }
+        
+        .summary-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #2d3748;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+        
+        .cost-breakdown {
+            margin-bottom: 25px;
+        }
+        
+        .cost-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid #f7fafc;
+        }
+        
+        .cost-item:last-child {
+            border-bottom: none;
+        }
+        
+        .cost-label {
+            color: #4a5568;
+            flex: 1;
+        }
+        
+        .cost-value {
+            font-weight: 600;
+            color: #2d3748;
+        }
+        
+        .total-section {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin: 20px 0;
+            text-align: center;
+        }
+        
+        .total-label {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            margin-bottom: 5px;
+        }
+        
+        .total-amount {
+            font-size: 2.2rem;
+            font-weight: 800;
+        }
+        
+        .order-button {
+            width: 100%;
+            background: linear-gradient(135deg, #48bb78, #38a169);
+            color: white;
+            border: none;
+            padding: 18px;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .order-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(72, 187, 120, 0.3);
+        }
+        
+        @media (max-width: 768px) {
+            .content {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+            .header h1 {
+                font-size: 2rem;
+            }
+            .container {
+                margin: 10px;
+                border-radius: 16px;
+            }
+            .platform-options {
+                flex-direction: column;
+                align-items: center;
+            }
+            .platform-option {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+        
+        .icon {
+            font-size: 1.5rem;
+            margin-right: 10px;
+        }
+        
+        .premium-badge {
+            background: linear-gradient(135deg, #f093fb, #f5576c);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-left: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📱 Mobile App Development</h1>
+            <p>React Native and Flutter apps that work seamlessly across iOS and Android</p>
+        </div>
+
+        <div class="base-price">
+            Base Package: R15,000 • From concept to app store
+        </div>
+
+        <div class="platform-selector">
+            <div style="font-size: 1.1rem; font-weight: 600; margin-bottom: 5px;">Choose Your Platform</div>
+            <div class="platform-options">
+                <div class="platform-option selected" data-platform="react-native">
+                    <div style="font-weight: 600;">⚛️ React Native</div>
+                    <div style="font-size: 0.9rem; opacity: 0.9;">JavaScript • Fast Development</div>
+                </div>
+                <div class="platform-option" data-platform="flutter">
+                    <div style="font-weight: 600;">🎯 Flutter</div>
+                    <div style="font-size: 0.9rem; opacity: 0.9;">Dart • High Performance</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content">
+            <div class="options-section">
+                <h2><span class="icon">🚀</span>Customize Your App</h2>
+
+                <div class="option-category">
+                    <div class="category-title">🎨 UI/UX Design</div>
+
+                    <div class="option-item" data-price="5000" data-name="Custom UI Design">
+                        <div style="display: flex; align-items: flex-start;">
+                            <div class="checkbox"></div>
+                            <div style="flex: 1;">
+                                <div class="option-header">
+                                    <div class="option-title">Custom UI Design <span class="premium-badge">POPULAR</span></div>
+                                    <div class="option-price">+R5,000</div>
+                                </div>
+                                <div class="option-description">Professional UI/UX design with mockups, prototypes, and design system</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="option-item" data-price="3500" data-name="Dark Mode Support">
+                        <div style="display: flex; align-items: flex-start;">
+                            <div class="checkbox"></div>
+                            <div style="flex: 1;">
+                                <div class="option-header">
+                                    <div class="option-title">Dark Mode Support</div>
+                                    <div class="option-price">+R3,500</div>
+                                </div>
+                                <div class="option-description">Implement dark theme with automatic switching and user preferences</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="option-item" data-price="4000" data-name="Animations & Micro-interactions">
+                        <div style="display: flex; align-items: flex-start;">
+                            <div class="checkbox"></div>
+                            <div style="flex: 1;">
+                                <div class="option-header">
+                                    <div class="option-title">Animations & Micro-interactions</div>
+                                    <div class="option-price">+R4,000</div>
+                                </div>
+                                <div class="option-description">Custom animations, transitions, and delightful micro-interactions</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="option-category">
+                    <div class="category-title">🔧 Core Features</div>
+
+                    <div class="option-item" data-price="6000" data-name="User Authentication">
+                        <div style="display: flex; align-items: flex-start;">
+                            <div class="checkbox"></div>
+                            <div style="flex: 1;">
+                                <div class="option-header">
+                                    <div class="option-title">User Authentication <span class="premium-badge">ESSENTIAL</span></div>
+                                    <div class="option-price">+R6,000</div>
+                                </div>
+                                <div class="option-description">Login, registration, password recovery, social login (Google, Facebook)</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="option-item" data-price="8000" data-name="Backend API Integration">
+                        <div style="display: flex; align-items: flex-start;">
+                            <div class="checkbox"></div>
+                            <div style="flex: 1;">
+                                <div class="option-header">
+                                    <div class="option-title">Backend API Integration</div>
+                                    <div class="option-price">+R8,000</div>
+                                </div>
+                                <div class="option-description">RESTful API integration, data synchronization, offline support</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="option-item" data-price="4500" data-name="Push Notifications">
+                        <div style="display: flex; align-items: flex-start;">
+                            <div class="checkbox"></div>
+                            <div style="flex: 1;">
+                                <div class="option-header">
+                                    <div class="option-title">Push Notifications</div>
+                                    <div class="option-price">+R4,500</div>
+                                </div>
+                                <div class="option-description">Firebase messaging, local notifications, notification scheduling</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="option-item" data-price="7000" data-name="In-App Purchases">
+                        <div style="display: flex; align-items: flex-start;">
+                            <div class="checkbox"></div>
+                            <div style="flex: 1;">
+                                <div class="option-header">
+                                    <div class="option-title">In-App Purchases</div>
+                                    <div class="option-price">+R7,000</div>
+                                </div>
+                                <div class="option-description">App Store & Google Play billing, subscription management, receipt validation</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="option-category">
+                    <div class="category-title">🔌 Advanced Integrations</div>
+
+                    <div class="option-item" data-price="5500" data-name="Maps & Location Services">
+                        <div style="display: flex; align-items: flex-start;">
+                            <div class="checkbox"></div>
+                            <div style="flex: 1;">
+                                <div class="option-header">
+                                    <div class="option-title">Maps & Location Services</div>
+                                    <div class="option-price">+R5,500</div>
+                                </div>
+                                <div class="option-description">Google Maps integration, GPS tracking, geofencing, location-based features</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="option-item" data-price="6500" data-name="Camera & Media">
+                        <div style="display: flex; align-items: flex-start;">
+                            <div class="checkbox"></div>
+                            <div style="flex: 1;">
+                                <div class="option-header">
+                                    <div class="option-title">Camera & Media</div>
+                                    <div class="option-price">+R6,500</div>
+                                </div>
+                                <div class="option-description">Camera integration, photo/video capture, image editing, media gallery</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="option-item" data-price="4000" data-name="Biometric Authentication">
+                        <div style="display: flex; align-items: flex-start;">
+                            <div class="checkbox"></div>
+                            <div style="flex: 1;">
+                                <div class="option-header">
+                                    <div class="option-title">Biometric Authentication</div>
+                                    <div class="option-price">+R4,000</div>
+                                </div>
+                                <div class="option-description">Fingerprint, Face ID, Touch ID authentication integration</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="option-item" data-price="8500" data-name="Real-time Chat">
+                        <div style="display: flex; align-items: flex-start;">
+                            <div class="checkbox"></div>
+                            <div style="flex: 1;">
+                                <div class="option-header">
+                                    <div class="option-title">Real-time Chat</div>
+                                    <div class="option-price">+R8,500</div>
+                                </div>
+                                <div class="option-description">Socket.io chat system, file sharing, typing indicators, read receipts</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="option-category">
+                    <div class="category-title">📊 Analytics & Performance</div>
+
+                    <div class="option-item" data-price="3000" data-name="Analytics Integration">
+                        <div style="display: flex; align-items: flex-start;">
+                            <div class="checkbox"></div>
+                            <div style="flex: 1;">
+                                <div class="option-header">
+                                    <div class="option-title">Analytics Integration</div>
+                                    <div class="option-price">+R3,000</div>
+                                </div>
+                                <div class="option-description">Google Analytics, Firebase Analytics, custom event tracking</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="option-item" data-price="4500" data-name="Performance Optimization">
+                        <div style="display: flex; align-items: flex-start;">
+                            <div class="checkbox"></div>
+                            <div style="flex: 1;">
+                                <div class="option-header">
+                                    <div class="option-title">Performance Optimization</div>
+                                    <div class="option-price">+R4,500</div>
+                                </div>
+                                <div class="option-description">Code optimization, bundle size reduction, lazy loading, caching strategies</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="option-item" data-price="5000" data-name="App Store Optimization">
+                        <div style="display: flex; align-items: flex-start;">
+                            <div class="checkbox"></div>
+                            <div style="flex: 1;">
+                                <div class="option-header">
+                                    <div class="option-title">App Store Optimization</div>
+                                    <div class="option-price">+R5,000</div>
+                                </div>
+                                <div class="option-description">ASO strategy, store listing optimization, submission support, review management</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="summary-panel">
+                <div class="summary-title">💰 Project Summary</div>
+
+                <div class="cost-breakdown">
+                    <div class="cost-item">
+                        <div class="cost-label">Platform: <span id="selected-platform">React Native</span></div>
+                        <div class="cost-value">R15,000</div>
+                    </div>
+                    <div id="selected-items"></div>
+                    <div class="cost-item">
+                        <div class="cost-label">Subtotal</div>
+                        <div class="cost-value" id="subtotal">R15,000</div>
+                    </div>
+                    <div class="cost-item">
+                        <div class="cost-label">Project Management (20%)</div>
+                        <div class="cost-value" id="labor-cost">R3,000</div>
+                    </div>
+                </div>
+
+                <div class="total-section">
+                    <div class="total-label">Total Investment</div>
+                    <div class="total-amount" id="total-amount">R18,000</div>
+                </div>
+
+                <button class="order-button" onclick="addToOrder()">
+                    🚀 Start Project
+                </button>
+
+                <div style="text-align: center; margin-top: 20px; color: #718096; font-size: 0.9rem;">
+                    ✨ 60-day warranty<br> 📱 iOS & Android deployment<br> 🔄 3 months free support
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const basePrice = 15000;
+        let selectedOptions = [];
+        let selectedPlatform = 'React Native';
+
+        // Platform selection
+        document.querySelectorAll('.platform-option').forEach(option => {
+            option.addEventListener('click', function() {
+                document.querySelectorAll('.platform-option').forEach(opt => opt.classList.remove('selected'));
+                this.classList.add('selected');
+
+                selectedPlatform = this.getAttribute('data-platform') === 'react-native' ? 'React Native' : 'Flutter';
+                document.getElementById('selected-platform').textContent = selectedPlatform;
+                updateSummary();
+            });
+        });
+
+        // Add click handlers to all option items
+        document.querySelectorAll('.option-item').forEach(item => {
+            item.addEventListener('click', function() {
+                this.classList.toggle('selected');
+                updateSummary();
+            });
+        });
+
+        function updateSummary() {
+            selectedOptions = [];
+            const selectedItems = document.getElementById('selected-items');
+            selectedItems.innerHTML = '';
+
+            let addonsTotal = 0;
+
+            document.querySelectorAll('.option-item.selected').forEach(item => {
+                const price = parseInt(item.getAttribute('data-price'));
+                const name = item.getAttribute('data-name');
+
+                selectedOptions.push({
+                    name,
+                    price
+                });
+                addonsTotal += price;
+
+                // Add to selected items display
+                const itemDiv = document.createElement('div');
+                itemDiv.className = 'cost-item';
+                itemDiv.innerHTML = `
+                    <div class="cost-label">${name}</div>
+                    <div class="cost-value">+R${price.toLocaleString()}</div>
+                `;
+                selectedItems.appendChild(itemDiv);
+            });
+
+            const subtotal = basePrice + addonsTotal;
+            const laborCost = Math.round(subtotal * 0.20);
+            const total = subtotal + laborCost;
+
+            document.getElementById('subtotal').textContent = `R${subtotal.toLocaleString()}`;
+            document.getElementById('labor-cost').textContent = `R${laborCost.toLocaleString()}`;
+            document.getElementById('total-amount').textContent = `R${total.toLocaleString()}`;
+        }
+
+        function addToOrder() {
+            const total = document.getElementById('total-amount').textContent;
+            const selectedCount = selectedOptions.length;
+
+            if (selectedCount === 0) {
+                alert(`🚀 ${selectedPlatform} Mobile App project started!\n\nTotal: ${total}\n\nIncludes: Basic app structure, navigation, responsive design, and app store deployment.\n\n⏱️ Estimated timeline: 4-6 weeks\n📱 Platforms: iOS & Android`);
+            } else {
+                let message = `🚀 ${selectedPlatform} Mobile App project started!\n\nTotal: ${total}\n\nIncludes:\n• Base Package (R15,000)\n`;
+
+                selectedOptions.forEach(option => {
+                    message += `• ${option.name} (+R${option.price.toLocaleString()})\n`;
+                });
+
+                message += `\n💼 Project Management (20%) included\n⏱️ Estimated timeline: 6-12 weeks\n📱 iOS & Android deployment\n🔄 3 months free support`;
+
+                alert(message);
+            }
+
+            // Here you would typically send the order data to your backend
+            console.log('Order data:', {
+                platform: selectedPlatform,
+                basePrice: basePrice,
+                selectedOptions: selectedOptions,
+                total: total
+            });
+        }
+    </script>
+</body>
+
+</html>

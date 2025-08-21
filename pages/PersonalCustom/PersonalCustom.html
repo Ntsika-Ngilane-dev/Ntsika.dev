@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal Brand Website - Configure Your Package</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            box-shadow: 0 32px 64px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 40px 30px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+            animation: shimmer 3s ease-in-out infinite;
+        }
+        
+        @keyframes shimmer {
+            0%,
+            100% {
+                transform: rotate(0deg) scale(1);
+            }
+            50% {
+                transform: rotate(180deg) scale(1.1);
+            }
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .base-price {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            color: white;
+            padding: 20px 30px;
+            text-align: center;
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+        
+        .content {
+            padding: 40px 30px;
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 40px;
+        }
+        
+        .options-section h2 {
+            font-size: 2rem;
+            color: #2d3748;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .option-category {
+            margin-bottom: 35px;
+        }
+        
+        .category-title {
+            font-size: 1.4rem;
+            color: #4a5568;
+            margin-bottom: 20px;
+            font-weight: 600;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 8px;
+        }
+        
+        .option-item {
+            background: white;
+            border: 2px solid #e2e8f0;
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 15px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .option-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(102, 126, 234, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+        
+        .option-item:hover {
+            border-color: #667eea;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(102, 126, 234, 0.15);
+        }
+        
+        .option-item:hover::before {
+            left: 100%;
+        }
+        
+        .option-item.selected {
+            border-color: #667eea;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.05), rgba(118, 75, 162, 0.05));
+            box-shadow: 0 4px 16px rgba(102, 126, 234, 0.2);
+        }
+        
+        .option-header {
+            display: flex;
+            justify-content: between;
+            align-items: flex-start;
+            margin-bottom: 10px;
+        }
+        
+        .option-title {
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: #2d3748;
+            flex: 1;
+        }
+        
+        .option-price {
+            font-weight: 700;
+            color: #667eea;
+            font-size: 1.1rem;
+            margin-left: 15px;
+        }
+        
+        .option-description {
+            color: #718096;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            margin-top: 8px;
+        }
+        
+        .checkbox {
+            width: 24px;
+            height: 24px;
+            border: 2px solid #cbd5e0;
+            border-radius: 6px;
+            margin-right: 15px;
+            position: relative;
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+        }
+        
+        .option-item.selected .checkbox {
+            background: #667eea;
+            border-color: #667eea;
+        }
+        
+        .option-item.selected .checkbox::after {
+            content: '✓';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-weight: bold;
+            font-size: 14px;
+        }
+        
+        .summary-panel {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            height: fit-content;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+            position: sticky;
+            top: 20px;
+        }
+        
+        .summary-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #2d3748;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+        
+        .cost-breakdown {
+            margin-bottom: 25px;
+        }
+        
+        .cost-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid #f7fafc;
+        }
+        
+        .cost-item:last-child {
+            border-bottom: none;
+        }
+        
+        .cost-label {
+            color: #4a5568;
+            flex: 1;
+        }
+        
+        .cost-value {
+            font-weight: 600;
+            color: #2d3748;
+        }
+        
+        .total-section {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin: 20px 0;
+            text-align: center;
+        }
+        
+        .total-label {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            margin-bottom: 5px;
+        }
+        
+        .total-amount {
+            font-size: 2.2rem;
+            font-weight: 800;
+        }
+        
+        .order-button {
+            width: 100%;
+            background: linear-gradient(135deg, #48bb78, #38a169);
+            color: white;
+            border: none;
+            padding: 18px;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .order-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(72, 187, 120, 0.3);
+        }
+        
+        .selected-items {
+            margin-bottom: 20px;
+        }
+        
+        .selected-item {
+            background: #f7fafc;
+            padding: 10px 15px;
+            border-radius: 8px;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        @media (max-width: 768px) {
+            .content {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+            .header h1 {
+                font-size: 2rem;
+            }
+            .container {
+                margin: 10px;
+                border-radius: 16px;
+            }
+        }
+        
+        .icon {
+            font-size: 1.5rem;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚀 Personal Brand Website</h1>
+            <p>Modern resume and portfolio websites that help you stand out</p>
+        </div>
+
+        <div class="base-price">
+            Base Package: R6,500 • Perfect for job seekers and professionals
+        </div>
+
+        <div class="content">
+            <div class="options-section">
+                <h2><span class="icon">⚡</span>Customize Your Website</h2>
+
+                <div class="option-category">
+                    <div class="category-title">🎨 Design & Branding</div>
+
+                    <div class="option-item" data-price="1500" data-name="Custom Logo Design">
+                        <div style="display: flex; align-items: flex-start;">
+                            <div class="checkbox"></div>
+                            <div style="flex: 1;">
+                                <div class="option-header">
+                                    <div class="option-title">Custom Logo Design</div>
+                                    <div class="option-price">+R1,500</div>
+                                </div>
+                                <div class="option-description">Professional logo design with 3 concepts, unlimited revisions, and brand guidelines</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="option-item" data-price="2000" data-name="Premium Color Scheme">
+                        <div style="display: flex; align-items: flex-start;">
+                            <div class="checkbox"></div>
+                            <div style="flex: 1;">
+                                <div class="option-header">
+                                    <div class="option-title">Premium Color Scheme</div>
+                                    <div class="option-price">+R2,000</div>
+                                </div>
+                                <div class="option-description">Custom color palette with gradients, animations, and advanced visual effects</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="option-item" data-price="1200" data-name="Professional Photography">
+                        <div style="display: flex; align-items: flex-start;">
+                            <div class="checkbox"></div>
+                            <div style="flex: 1;">
+                                <div class="option-header">
+                                    <div class="option-title">Professional Photography</div>
+                                    <div class="option-price">+R1,200</div>
+                                </div>
+                                <div class="option-description">2-hour professional photoshoot with 10 edited high-resolution images</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="option-category">
+                    <div class="category-title">⚙️ Functionality</div>
+
+                    <div class="option-item" data-price="800" data-name="Contact Form">
+                        <div style="display: flex; align-items: flex-start;">
+                            <div class="checkbox"></div>
+                            <div style="flex: 1;">
+                                <div class="option-header">
+                                    <div class="option-title">Advanced Contact Form</div>
+                                    <div class="option-price">+R800</div>
+                                </div>
+                                <div class="option-description">Custom contact form with file upload, email notifications, and spam protection</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="option-item" data-price="1500" data-name="Blog System">
+                        <div style="display: flex; align-items: flex-start;">
+                            <div class="checkbox"></div>
+                            <div style="flex: 1;">
+                                <div class="option-header">
+                                    <div class="option-title">Blog System</div>
+                                    <div class="option-price">+R1,500</div>
+                                </div>
+                                <div class="option-description">Full blogging platform with categories, tags, and content management system</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="option-item" data-price="1000" data-name="Portfolio Gallery">
+                        <div style="display: flex; align-items: flex-start;">
+                            <div class="checkbox"></div>
+                            <div style="flex: 1;">
+                                <div class="option-header">
+                                    <div class="option-title">Interactive Portfolio Gallery</div>
+                                    <div class="option-price">+R1,000</div>
+                                </div>
+                                <div class="option-description">Showcase your work with lightbox gallery, filtering, and project details</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="option-category">
+                    <div class="category-title">📈 Marketing & SEO</div>
+
+                    <div class="option-item" data-price="1200" data-name="SEO Optimization">
+                        <div style="display: flex; align-items: flex-start;">
+                            <div class="checkbox"></div>
+                            <div style="flex: 1;">
+                                <div class="option-header">
+                                    <div class="option-title">SEO Optimization</div>
+                                    <div class="option-price">+R1,200</div>
+                                </div>
+                                <div class="option-description">Complete SEO setup, meta tags, structured data, and Google Search Console integration</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="option-item" data-price="600" data-name="Social Media Integration">
+                        <div style="display: flex; align-items: flex-start;">
+                            <div class="checkbox"></div>
+                            <div style="flex: 1;">
+                                <div class="option-header">
+                                    <div class="option-title">Social Media Integration</div>
+                                    <div class="option-price">+R600</div>
+                                </div>
+                                <div class="option-description">Social media links, share buttons, and Instagram feed integration</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="option-item" data-price="900" data-name="Analytics Setup">
+                        <div style="display: flex; align-items: flex-start;">
+                            <div class="checkbox"></div>
+                            <div style="flex: 1;">
+                                <div class="option-header">
+                                    <div class="option-title">Analytics & Tracking</div>
+                                    <div class="option-price">+R900</div>
+                                </div>
+                                <div class="option-description">Google Analytics setup, conversion tracking, and monthly reports</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="summary-panel">
+                <div class="summary-title">💰 Order Summary</div>
+
+                <div class="cost-breakdown">
+                    <div class="cost-item">
+                        <div class="cost-label">Base Package</div>
+                        <div class="cost-value">R6,500</div>
+                    </div>
+                    <div id="selected-items"></div>
+                    <div class="cost-item">
+                        <div class="cost-label">Subtotal</div>
+                        <div class="cost-value" id="subtotal">R6,500</div>
+                    </div>
+                    <div class="cost-item">
+                        <div class="cost-label">Labor Cost (15%)</div>
+                        <div class="cost-value" id="labor-cost">R975</div>
+                    </div>
+                </div>
+
+                <div class="total-section">
+                    <div class="total-label">Total Investment</div>
+                    <div class="total-amount" id="total-amount">R7,475</div>
+                </div>
+
+                <button class="order-button" onclick="addToOrder()">
+                    🛒 Add to Order
+                </button>
+
+                <div style="text-align: center; margin-top: 20px; color: #718096; font-size: 0.9rem;">
+                    ✨ 30-day money-back guarantee<br> 🚀 7-day delivery promise
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const basePrice = 6500;
+        let selectedOptions = [];
+
+        // Add click handlers to all option items
+        document.querySelectorAll('.option-item').forEach(item => {
+            item.addEventListener('click', function() {
+                this.classList.toggle('selected');
+                updateSummary();
+            });
+        });
+
+        function updateSummary() {
+            selectedOptions = [];
+            const selectedItems = document.getElementById('selected-items');
+            selectedItems.innerHTML = '';
+
+            let addonsTotal = 0;
+
+            document.querySelectorAll('.option-item.selected').forEach(item => {
+                const price = parseInt(item.getAttribute('data-price'));
+                const name = item.getAttribute('data-name');
+
+                selectedOptions.push({
+                    name,
+                    price
+                });
+                addonsTotal += price;
+
+                // Add to selected items display
+                const itemDiv = document.createElement('div');
+                itemDiv.className = 'cost-item';
+                itemDiv.innerHTML = `
+                    <div class="cost-label">${name}</div>
+                    <div class="cost-value">+R${price.toLocaleString()}</div>
+                `;
+                selectedItems.appendChild(itemDiv);
+            });
+
+            const subtotal = basePrice + addonsTotal;
+            const laborCost = Math.round(subtotal * 0.15);
+            const total = subtotal + laborCost;
+
+            document.getElementById('subtotal').textContent = `R${subtotal.toLocaleString()}`;
+            document.getElementById('labor-cost').textContent = `R${laborCost.toLocaleString()}`;
+            document.getElementById('total-amount').textContent = `R${total.toLocaleString()}`;
+        }
+
+        function addToOrder() {
+            const total = document.getElementById('total-amount').textContent;
+            const selectedCount = selectedOptions.length;
+
+            if (selectedCount === 0) {
+                alert(`🎉 Base Personal Brand Website package added to order!\n\nTotal: ${total}\n\nIncludes: Modern responsive design, professional layout, contact information, and basic portfolio showcase.`);
+            } else {
+                let message = `🎉 Personal Brand Website package added to order!\n\nTotal: ${total}\n\nIncludes:\n• Base Package (R6,500)\n`;
+
+                selectedOptions.forEach(option => {
+                    message += `• ${option.name} (+R${option.price.toLocaleString()})\n`;
+                });
+
+                message += `\n💼 Labor cost (15%) included\n🚀 Estimated delivery: 7-14 days`;
+
+                alert(message);
+            }
+
+            // Here you would typically send the order data to your backend
+            console.log('Order data:', {
+                basePackage: 'Personal Brand Website',
+                basePrice: basePrice,
+                selectedOptions: selectedOptions,
+                total: total
+            });
+        }
+    </script>
+</body>
+
+</html>
