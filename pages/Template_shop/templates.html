@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium Website Templates</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+            background-size: 30px 30px;
+            animation: float 20s infinite linear;
+        }
+        
+        @keyframes float {
+            0% {
+                transform: translate(-50%, -50%) rotate(0deg);
+            }
+            100% {
+                transform: translate(-50%, -50%) rotate(360deg);
+            }
+        }
+        
+        .header h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            z-index: 2;
+            position: relative;
+        }
+        
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            z-index: 2;
+            position: relative;
+        }
+        
+        .main-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 40px;
+            padding: 40px;
+        }
+        
+        .templates-section h2 {
+            font-size: 2rem;
+            margin-bottom: 30px;
+            color: #2c3e50;
+            text-align: center;
+        }
+        
+        .templates-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .template-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            border: 3px solid transparent;
+        }
+        
+        .template-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+        
+        .template-card.selected {
+            border-color: #667eea;
+            box-shadow: 0 0 20px rgba(102, 126, 234, 0.3);
+        }
+        
+        .template-image {
+            height: 200px;
+            background: linear-gradient(45deg, #f0f2f5, #e9ecef);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: #6c757d;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .template-image::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.6), transparent);
+            transition: left 0.5s;
+        }
+        
+        .template-card:hover .template-image::before {
+            left: 100%;
+        }
+        
+        .template-content {
+            padding: 25px;
+        }
+        
+        .template-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #2c3e50;
+        }
+        
+        .template-description {
+            color: #6c757d;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+        
+        .template-features {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+        
+        .feature-tag {
+            background: #e3f2fd;
+            color: #1976d2;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+        
+        .template-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .template-price {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #667eea;
+        }
+        
+        .select-btn {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .select-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        .select-btn.selected {
+            background: linear-gradient(135deg, #28a745, #20c997);
+        }
+        
+        .cart-section {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            height: fit-content;
+            position: sticky;
+            top: 20px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .cart-section h3 {
+            font-size: 1.8rem;
+            margin-bottom: 25px;
+            color: #2c3e50;
+            text-align: center;
+        }
+        
+        .cart-items {
+            margin-bottom: 25px;
+            min-height: 100px;
+        }
+        
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            transition: all 0.3s ease;
+        }
+        
+        .cart-item:hover {
+            background: #e9ecef;
+        }
+        
+        .remove-btn {
+            background: #dc3545;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 25px;
+            height: 25px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: all 0.3s ease;
+        }
+        
+        .remove-btn:hover {
+            transform: scale(1.1);
+            background: #c82333;
+        }
+        
+        .cart-summary {
+            border-top: 2px solid #e9ecef;
+            padding-top: 20px;
+        }
+        
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+        
+        .summary-row.total {
+            font-weight: 700;
+            font-size: 1.3rem;
+            color: #667eea;
+            border-top: 1px solid #e9ecef;
+            padding-top: 10px;
+        }
+        
+        .checkout-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #28a745, #20c997);
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 10px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+        }
+        
+        .checkout-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(40, 167, 69, 0.3);
+        }
+        
+        .empty-cart {
+            text-align: center;
+            color: #6c757d;
+            font-style: italic;
+            padding: 40px 20px;
+        }
+        
+        @media (max-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+            .header h1 {
+                font-size: 2rem;
+            }
+            .templates-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Premium Website Templates</h1>
+            <p>Professional, responsive designs ready for customization. Perfect for agencies and developers.</p>
+        </div>
+
+        <div class="main-content">
+            <div class="templates-section">
+                <h2>Choose Your Templates</h2>
+                <div class="templates-grid">
+                    <div class="template-card" data-id="1" data-name="Corporate Pro" data-price="1200">
+                        <div class="template-image">🏢</div>
+                        <div class="template-content">
+                            <div class="template-title">Corporate Pro</div>
+                            <div class="template-description">Professional business template with clean design and modern layout. Perfect for corporate websites.</div>
+                            <div class="template-features">
+                                <span class="feature-tag">Responsive</span>
+                                <span class="feature-tag">SEO Ready</span>
+                                <span class="feature-tag">Fast Loading</span>
+                            </div>
+                            <div class="template-footer">
+                                <div class="template-price">R1,200</div>
+                                <button class="select-btn">Select</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="template-card" data-id="2" data-name="Creative Agency" data-price="1500">
+                        <div class="template-image">🎨</div>
+                        <div class="template-content">
+                            <div class="template-title">Creative Agency</div>
+                            <div class="template-description">Bold and creative design for agencies, studios, and creative professionals. Includes portfolio sections.</div>
+                            <div class="template-features">
+                                <span class="feature-tag">Portfolio</span>
+                                <span class="feature-tag">Animations</span>
+                                <span class="feature-tag">Mobile First</span>
+                            </div>
+                            <div class="template-footer">
+                                <div class="template-price">R1,500</div>
+                                <button class="select-btn">Select</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="template-card" data-id="3" data-name="E-Commerce Plus" data-price="2000">
+                        <div class="template-image">🛒</div>
+                        <div class="template-content">
+                            <div class="template-title">E-Commerce Plus</div>
+                            <div class="template-description">Complete online store template with shopping cart, payment integration, and inventory management.</div>
+                            <div class="template-features">
+                                <span class="feature-tag">Shopping Cart</span>
+                                <span class="feature-tag">Payment Ready</span>
+                                <span class="feature-tag">Admin Panel</span>
+                            </div>
+                            <div class="template-footer">
+                                <div class="template-price">R2,000</div>
+                                <button class="select-btn">Select</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="template-card" data-id="4" data-name="Restaurant Deluxe" data-price="1000">
+                        <div class="template-image">🍽️</div>
+                        <div class="template-content">
+                            <div class="template-title">Restaurant Deluxe</div>
+                            <div class="template-description">Elegant restaurant template with menu display, reservation system, and photo gallery.</div>
+                            <div class="template-features">
+                                <span class="feature-tag">Menu Display</span>
+                                <span class="feature-tag">Reservations</span>
+                                <span class="feature-tag">Gallery</span>
+                            </div>
+                            <div class="template-footer">
+                                <div class="template-price">R1,000</div>
+                                <button class="select-btn">Select</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="template-card" data-id="5" data-name="Tech Startup" data-price="1800">
+                        <div class="template-image">🚀</div>
+                        <div class="template-content">
+                            <div class="template-title">Tech Startup</div>
+                            <div class="template-description">Modern startup template with landing page optimization, lead capture, and product showcase.</div>
+                            <div class="template-features">
+                                <span class="feature-tag">Landing Page</span>
+                                <span class="feature-tag">Lead Capture</span>
+                                <span class="feature-tag">Analytics</span>
+                            </div>
+                            <div class="template-footer">
+                                <div class="template-price">R1,800</div>
+                                <button class="select-btn">Select</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="template-card" data-id="6" data-name="Personal Portfolio" data-price="800">
+                        <div class="template-image">👤</div>
+                        <div class="template-content">
+                            <div class="template-title">Personal Portfolio</div>
+                            <div class="template-description">Clean portfolio template for freelancers and professionals to showcase their work and skills.</div>
+                            <div class="template-features">
+                                <span class="feature-tag">Portfolio</span>
+                                <span class="feature-tag">Blog Ready</span>
+                                <span class="feature-tag">Contact Form</span>
+                            </div>
+                            <div class="template-footer">
+                                <div class="template-price">R800</div>
+                                <button class="select-btn">Select</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="template-card" data-id="7" data-name="Medical Practice" data-price="1600">
+                        <div class="template-image">⚕️</div>
+                        <div class="template-content">
+                            <div class="template-title">Medical Practice</div>
+                            <div class="template-description">Professional medical template with appointment booking, staff profiles, and service information.</div>
+                            <div class="template-features">
+                                <span class="feature-tag">Appointments</span>
+                                <span class="feature-tag">HIPAA Ready</span>
+                                <span class="feature-tag">Staff Profiles</span>
+                            </div>
+                            <div class="template-footer">
+                                <div class="template-price">R1,600</div>
+                                <button class="select-btn">Select</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="template-card" data-id="8" data-name="Real Estate Pro" data-price="2200">
+                        <div class="template-image">🏠</div>
+                        <div class="template-content">
+                            <div class="template-title">Real Estate Pro</div>
+                            <div class="template-description">Comprehensive real estate template with property listings, search functionality, and agent profiles.</div>
+                            <div class="template-features">
+                                <span class="feature-tag">Property Search</span>
+                                <span class="feature-tag">Agent Profiles</span>
+                                <span class="feature-tag">Map Integration</span>
+                            </div>
+                            <div class="template-footer">
+                                <div class="template-price">R2,200</div>
+                                <button class="select-btn">Select</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="cart-section">
+                <h3>Your Selection</h3>
+                <div class="cart-items" id="cartItems">
+                    <div class="empty-cart">No templates selected yet.<br>Choose templates to see pricing.</div>
+                </div>
+                <div class="cart-summary">
+                    <div class="summary-row">
+                        <span>Subtotal:</span>
+                        <span id="subtotal">R0.00</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Labor (15%):</span>
+                        <span id="labor">R0.00</span>
+                    </div>
+                    <div class="summary-row total">
+                        <span>Total:</span>
+                        <span id="total">R0.00</span>
+                    </div>
+                    <button class="checkout-btn" onclick="checkout()">Proceed to Checkout</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let selectedTemplates = {};
+
+        function updateCart() {
+            const cartItems = document.getElementById('cartItems');
+            const subtotalElement = document.getElementById('subtotal');
+            const laborElement = document.getElementById('labor');
+            const totalElement = document.getElementById('total');
+
+            if (Object.keys(selectedTemplates).length === 0) {
+                cartItems.innerHTML = '<div class="empty-cart">No templates selected yet.<br>Choose templates to see pricing.</div>';
+                subtotalElement.textContent = 'R0.00';
+                laborElement.textContent = 'R0.00';
+                totalElement.textContent = 'R0.00';
+                return;
+            }
+
+            let subtotal = 0;
+            let cartHTML = '';
+
+            for (const [id, template] of Object.entries(selectedTemplates)) {
+                subtotal += template.price;
+                cartHTML += `
+                    <div class="cart-item">
+                        <div>
+                            <strong>${template.name}</strong><br>
+                            <small>R${template.price.toLocaleString()}</small>
+                        </div>
+                        <button class="remove-btn" onclick="removeTemplate('${id}')">×</button>
+                    </div>
+                `;
+            }
+
+            const labor = Math.round(subtotal * 0.15);
+            const total = subtotal + labor;
+
+            cartItems.innerHTML = cartHTML;
+            subtotalElement.textContent = `R${subtotal.toLocaleString()}`;
+            laborElement.textContent = `R${labor.toLocaleString()}`;
+            totalElement.textContent = `R${total.toLocaleString()}`;
+        }
+
+        function removeTemplate(id) {
+            delete selectedTemplates[id];
+
+            // Update card appearance
+            const card = document.querySelector(`[data-id="${id}"]`);
+            const button = card.querySelector('.select-btn');
+            card.classList.remove('selected');
+            button.classList.remove('selected');
+            button.textContent = 'Select';
+
+            updateCart();
+        }
+
+        function checkout() {
+            if (Object.keys(selectedTemplates).length === 0) {
+                alert('Please select at least one template before proceeding to checkout.');
+                return;
+            }
+
+            const total = document.getElementById('total').textContent;
+            const templateNames = Object.values(selectedTemplates).map(t => t.name).join(', ');
+
+            alert(`Thank you for your selection!\n\nTemplates: ${templateNames}\nTotal: ${total}\n\nRedirecting to payment...`);
+        }
+
+        // Add event listeners to all select buttons
+        document.querySelectorAll('.select-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const card = this.closest('.template-card');
+                const id = card.dataset.id;
+                const name = card.dataset.name;
+                const price = parseInt(card.dataset.price);
+
+                if (selectedTemplates[id]) {
+                    // Remove from selection
+                    removeTemplate(id);
+                } else {
+                    // Add to selection
+                    selectedTemplates[id] = {
+                        name,
+                        price
+                    };
+                    card.classList.add('selected');
+                    this.classList.add('selected');
+                    this.textContent = 'Selected ✓';
+                    updateCart();
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
